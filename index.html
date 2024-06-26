@@ -3,18 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wildlife Simulation</title>
+    <title>Simulation</title>
     <style>
-        canvas {
-            border: 1px solid black;
-            display: block;
-            margin: 0 auto;
-            background: sandybrown;
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #bababa; /* Sandy brown color */
         }
+
+        canvas {
+            border: 1px solid #000;
+            background-color: #f4a460; /* Sandy brown color }
     </style>
+    <script src="actors/grass.js" defer></script>
+    <script src="actors/wolf.js" defer></script>
+    <script src="actors/sheep.js" defer></script>
+    <script src="framework.js" defer></script>
 </head>
 <body>
     <canvas id="simulationCanvas" width="1280" height="720"></canvas>
-    <script src="simulation.js"></script>
 </body>
 </html>
