@@ -1,7 +1,8 @@
-class Grass {
+import Entity from './entity.js';
+
+class Grass extends Entity {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.type = 'grass';
         this.active = true;
         this.age = 0;
@@ -25,9 +26,9 @@ class Grass {
     }
 
     die() {
-        const index = simulation.entities.indexOf(this);
+        const index = this.simulation.entities.indexOf(this);
         if (index > -1) {
-            simulation.entities.splice(index, 1);
+            this.simulation.entities.splice(index, 1);
         }
     }
 
@@ -36,8 +37,8 @@ class Grass {
         while (attempts < 10) {
             let newX = this.x + (Math.random() - 0.5) * 80;
             let newY = this.y + (Math.random() - 0.5) * 80;
-            if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !simulation.checkOverlap(newX, newY, 'grass')) {
-                simulation.entities.push(new Grass(newX, newY));
+            if (newX >= 0 && newX < WIDTH && newY >= 0 && newY < HEIGHT && !this.simulation.checkOverlap(newX, newY, 'grass')) {
+                this.simulation.entities.push(new Grass(newX, newY));
                 break;
             }
             attempts++;
@@ -52,10 +53,12 @@ class Grass {
             { x: -10, y: 10 }, { x: 0, y: 10 }, { x: 10, y: 10 }
         ];
         positions.forEach(pos => {
-            if (simulation.entities.some(e => e.type === 'grass' && Math.abs(e.x - (this.x + pos.x)) < 10 && Math.abs(e.y - (this.y + pos.y)) < 10)) {
+            if (this.simulation.entities.some(e => e.type === 'grass' && Math.abs(e.x - (this.x + pos.x)) < 10 && Math.abs(e.y - (this.y + pos.y)) < 10)) {
                 covered++;
             }
         });
         return covered >= 5;
     }
 }
+
+export default Grass;

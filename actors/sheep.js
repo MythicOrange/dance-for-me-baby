@@ -1,7 +1,8 @@
-class Sheep {
+import Entity from './entity.js';
+
+class Sheep extends Entity {
     constructor(x, y) {
-        this.x = x;
-        this.y = y;
+        super(x, y);
         this.type = 'sheep';
         this.age = 0;
         this.panicTick = 0;
@@ -24,7 +25,7 @@ class Sheep {
     move() {
         let speed = 8;
         if (this.panicTick > 0) speed *= 2.5;
-        let target = simulation.findNearest(this, 'grass');
+        let target = this.findNearest(this, 'grass');
         if (target) {
             let dx = target.x - this.x;
             let dy = target.y - this.y;
@@ -41,9 +42,26 @@ class Sheep {
     }
 
     die() {
-        const index = simulation.entities.indexOf(this);
+        const index = this.simulation.entities.indexOf(this);
         if (index > -1) {
-            simulation.entities.splice(index, 1);
+            this.simulation.entities.splice(index, 1);
         }
     }
+
+    findNearest(entity, type) {
+        let nearestEntity = null;
+        let minDist = Infinity;
+        this.simulation.entities.forEach(e => {
+            if (e.type === type) {
+                let dist = Math.sqrt(Math.pow(e.x - entity.x, 2) + Math.pow(e.y - entity.y, 2));
+                if (dist < minDist) {
+                    minDist = dist;
+                    nearestEntity = e;
+                }
+            }
+        });
+        return nearestEntity;
+    }
 }
+
+export default Sheep;
